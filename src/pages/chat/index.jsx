@@ -3,6 +3,7 @@ import { NavBar, List, InputItem, Grid, Icon } from 'antd-mobile'
 import { connect } from 'react-redux'
 
 import { sendMsg, getRead } from '../../redux/action'
+import './index.less'
 
 const Item = List.Item
 
@@ -51,6 +52,11 @@ class Chat extends Component {
 
     componentDidMount() {
         window.scrollTo(0, document.documentElement.scrollHeight)
+        window.addEventListener('keydown',e=>{
+            if(e.keyCode===13){
+                this.sendMsg()
+            }
+        })
     }
 
     componentDidUpdate() {
@@ -99,7 +105,7 @@ class Chat extends Component {
                                         className='chat-me'
                                         extra={<img src={require(`../../assets/images/headers/${myHeader}.png`)} />}
                                     >
-                                        {msg.content}
+                                        <div dangerouslySetInnerHTML={{__html:msg.content}}></div>
                                     </Item>
                                 )
 
@@ -109,7 +115,7 @@ class Chat extends Component {
                                         key={msg._id}
                                         thumb={require(`../../assets/images/headers/${header}.png`)}
                                     >
-                                        {msg.content}
+                                        <div dangerouslySetInnerHTML={{__html:msg.content}}></div>
                                     </Item>
                                 )
 

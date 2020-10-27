@@ -89,12 +89,13 @@ export const getUser = () => {
     }
 }
 
-export const getUserList = type => {
+export const getUserList = (type,userid) => {
     return async dispatch => {
         const result = await reqUser(type)
         if(result.data.code===0){
             const {data} = result.data
             dispatch(setUserList(data))
+            getMsgList(dispatch,userid)
         }else{
             const msg = result.data.msg
             Toast.info(msg)
@@ -104,7 +105,7 @@ export const getUserList = type => {
 
 function initIO(dispatch,userid){
     if(!io.socket){
-        io.socket = io('ws://10.200.4.147:4000')
+        io.socket = io('ws://localhost:4000')
         io.socket.on('receiveMsg',msg=>{
             if(msg.from===userid || msg.to===userid){
                 dispatch(receiveMsg(msg))

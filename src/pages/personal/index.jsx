@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Cookies from 'js-cookie'
 
 import { resetUser } from '../../redux/action'
+import io from 'socket.io-client'
 
 const Item = List.Item
 const Brief = Item.Brief
@@ -16,6 +17,7 @@ class Personal extends Component {
                 text: '确认', onPress: () => {
                     Cookies.remove('user_id')
                     this.props.resetUser()
+                    io.socket.close()
                 }
             }
         ])
